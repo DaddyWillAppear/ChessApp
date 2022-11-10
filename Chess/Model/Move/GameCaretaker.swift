@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+class GameCaretaker {
+    var gameStates = StackLinkedList<GameMemento>()
+    var tmpMemento: GameMemento?
+}

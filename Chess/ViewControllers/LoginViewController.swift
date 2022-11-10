@@ -5,4 +5,19 @@
 //  Created by Николай Щербаков on 10.11.2022.
 //
 
-import Foundation
+import UIKit
+
+class LoginViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    
+    @IBAction func loginButtonAction(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "chessBoardSegue", sender: nil)
+    }
+    
+    
+}

@@ -25,7 +25,7 @@ class Board {
         }
     }
     
-    func discard(availableMoves: Bool, underAttackArray: Bool) {
+    func discard(availableMoves: Bool, underAttackArray: Bool, piece: Bool) {
         for i in 0...boardSize {
             for j in 0...boardSize {
                 if availableMoves == true {

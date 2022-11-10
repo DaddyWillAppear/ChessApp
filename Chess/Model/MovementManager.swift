@@ -28,7 +28,7 @@ class MovementManager {
     }
     
     func setupUnderAttackSquares() {
-        board.discard(availableMoves: true, underAttackArray: true)
+        board.discard(availableMoves: true, underAttackArray: true, piece: false)
         
         for i in 0...board.boardSize {
             for j in 0...board.boardSize {
@@ -39,22 +39,12 @@ class MovementManager {
         }
     }
     
-    @discardableResult
-    func movePiece(oldCoordinate: (Int,Int), newCoordinate: (Int,Int))-> Piece? {
-        let piece = board.board[oldCoordinate.0][oldCoordinate.1].piece
-        let defeatedPiece = board.board[newCoordinate.0][newCoordinate.1].piece
-        board.board[oldCoordinate.0][oldCoordinate.1].piece = nil
-        board.board[newCoordinate.0][newCoordinate.1].piece = piece
+    func movePiece(oldCoordinate: (Int,Int), newCoordinate: (Int,Int)) {
+        let piece = board.getPiece(by: oldCoordinate)
+        piece?.turnsAfterMove += 1
+        board.getSquare(by: newCoordinate).piece = piece
+        board.getSquare(by: oldCoordinate).piece = nil
         piece?.pieceMoved = true
-        board.discard(availableMoves: true, underAttackArray: true)
-        setupUnderAttackSquares()
-        return defeatedPiece
-    }
-    
-    func moveBack(defeatedPiece: Piece?, oldCoordinate: (Int,Int), currentCoordinate: (Int,Int)) {
-        board.getSquare(by: oldCoordinate).piece = board.getPiece(by: currentCoordinate)
-        board.getSquare(by: currentCoordinate).piece = defeatedPiece
-        board.discard(availableMoves: true, underAttackArray: true)
         setupUnderAttackSquares()
     }
     

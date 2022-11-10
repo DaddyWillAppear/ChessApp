@@ -26,6 +26,7 @@ class Pawn: PieceMovementStrategy {
         for moveValue in movementValue {
             array.append(contentsOf: availableMovesHelper(coordinate: coordinate, direction: moveValue, board: board))
         }
+        
         return array
     }
     
@@ -43,16 +44,19 @@ class Pawn: PieceMovementStrategy {
                 if direction.1 == 0 {
                     movesArray.append(tmpCoordinate)
                 } else {
+                    if direction.1 == -1 && board.getPiece(by: (coordinate.0, coordinate.1 - 1))?.pieceType == .pawn && board.getPiece(by: (coordinate.0, coordinate.1 - 1))?.turnsAfterMove == 1 {
+                        movesArray.append(tmpCoordinate)
+                    }
+                    if direction.1 == 1 && board.getPiece(by: (coordinate.0, coordinate.1 + 1))?.pieceType == .pawn && board.getPiece(by: (coordinate.0, coordinate.1 + 1))?.turnsAfterMove == 1 {
+                        movesArray.append(tmpCoordinate)
+                    }
+                    
                     board.underAttackCheck(coordinate: tmpCoordinate, piece: piece)
                 }
             } else if board.getPiece(by: tmpCoordinate)?.color != board.getPiece(by: coordinate)?.color {
                 if direction.1 != 0 {
                     movesArray.append(tmpCoordinate)
-                }
-                if let first = movementValue.first, let last = movementValue.last {
-                    if direction == first && last.0 % 2 == 0 {
-                        movementValue.removeLast()
-                    }
+                    board.underAttackCheck(coordinate: tmpCoordinate, piece: piece)
                 }
             } else if board.getPiece(by: tmpCoordinate)?.color == board.getPiece(by: coordinate)?.color {
                 if direction.1 != 0 {

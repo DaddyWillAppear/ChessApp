@@ -9,4 +9,5 @@ import UIKit
 
 class MovesHistoryCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var moveLabel: UILabel!
 }
